@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Simple Calculator</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="num1">Number 1:</label>
+                <input type="text" id="num1" class="form-control" placeholder="Enter first number">
+            </div>
+            <div class="col-md-4">
+                <label for="operation">Operation:</label>
+                <select id="operation" class="form-control">
+                    <option value="add">Addition (+)</option>
+                    <option value="subtract">Subtraction (-)</option>
+                    <option value="multiply">Multiplication (*)</option>
+                    <option value="divide">Division (/)</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="num2">Number 2:</label>
+                <input type="text" id="num2" class="form-control" placeholder="Enter second number">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div id="result" class="alert" role="alert"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function calculate() {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            var operation = document.getElementById('operation').value;
+            var resultElement = document.getElementById('result');
+
+            // Check if input is valid numeric
+            if (isNaN(num1) || isNaN(num2)) {
+                resultElement.innerHTML = 'Please enter valid numbers.';
+                resultElement.classList.add('alert-danger');
+                resultElement.classList.remove('alert-success');
+                return;
+            }
+
+            // Perform calculation based on selected operation
+            var result;
+            switch (operation) {
+                case 'add':
+                    result = num1 + num2;
+                    break;
+                case 'subtract':
+                    result = num1 - num2;
+                    break;
+                case 'multiply':
+                    result = num1 * num2;
+                    break;
+                case 'divide':
+                    if (num2 === 0) {
+                        resultElement.innerHTML = 'Division by zero is not allowed.';
+                        resultElement.classList.add('alert-danger');
+                        resultElement.classList.remove('alert-success');
+                        return;
+                    }
+                    result = num1 / num2;
+                    break;
+                default:
+                    resultElement.innerHTML = 'Invalid operation.';
+                    resultElement.classList.add('alert-danger');
+                    resultElement.classList.remove('alert-success');
+                    return;
+            }
+
+            // Display result
+            resultElement.innerHTML = 'Result: ' + result;
+            resultElement.classList.add('alert-success');
+            resultElement.classList.remove('alert-danger');
+        }
+    </script>
+</body>
+
+</html>
